@@ -5,7 +5,7 @@ import {errorAC, getCityAC, getWeatherThunk} from "./Redux/Reducer";
 import WeatherDashboard from "./Components/WeatherDashboard";
 import {CSSTransition, TransitionGroup} from "react-transition-group";
 
-const App = ({dashboards, getWeatherThunk, getCityAC, city,error,errorAC}) => {
+const App = ({dashboards, getWeatherThunk, getCityAC, city, error, errorAC}) => {
     useEffect(() => {
         if (city)
             getWeatherThunk(city)
@@ -17,39 +17,38 @@ const App = ({dashboards, getWeatherThunk, getCityAC, city,error,errorAC}) => {
     const clearInput = () => setValueInput('')
 
     let dashboard = dashboards.map(m =>
-        <CSSTransition classNames="option" key={m.name}  timeout={1000}>
+        <CSSTransition classNames="option" key={m.name} timeout={1000}>
             <WeatherDashboard
-                              icon={m.weather[0].icon}
-                              city={m.name}
-                              mainWeather={m.main}/>
+                icon={m.weather[0].icon}
+                city={m.name}
+                mainWeather={m.main}/>
         </CSSTransition>)
 
-if(error){
-    setTimeout(()=>errorAC(false),3000)
-}
+    if (error) {
+        setTimeout(() => errorAC(false), 3000)
+    }
     return (
         <div className="App">
             <div className="App__form">
-            <input value={valueInput}
-                   onChange={(e) => {
-                       setValueInput(e.currentTarget.value.replace(/^[а-яА-Я]+$/, ''))
-                   }}
-                   placeholder="search"/>
+                <input value={valueInput}
+                       onChange={(e) => {
+                           setValueInput(e.currentTarget.value.replace(/^[а-яА-Я]+$/, ''))
+                       }}
+                       placeholder="search"/>
 
-            <button onClick={addCity}>add</button>
+                <button onClick={addCity}>add</button>
 
-            <button onClick={clearInput}>Clear</button>
+                <button onClick={clearInput}>Clear</button>
             </div>
-            <div className="App__error">{error &&<span>city not found</span>}</div>
+            <div className="App__error">{error && <span>city not found</span>}</div>
             {dashboards.length === 0 && (
                 <div className="App__isEmpty">Dashboard is empty</div>
             )}
-
-                <div >
-                    <TransitionGroup className="dashboards">
+            <div>
+                <TransitionGroup className="dashboards">
                     {dashboard}
-                    </TransitionGroup>
-                </div>
+                </TransitionGroup>
+            </div>
 
         </div>
     );
@@ -63,6 +62,6 @@ const mapStateToProps = (state) => {
     }
 }
 
-export default connect(mapStateToProps, {getWeatherThunk, getCityAC,errorAC})(App)
+export default connect(mapStateToProps, {getWeatherThunk, getCityAC, errorAC})(App)
 
 

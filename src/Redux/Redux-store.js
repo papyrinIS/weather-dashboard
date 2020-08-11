@@ -5,11 +5,7 @@ import {initState, Reducer} from "./Reducer";
 
 let reducers = combineReducers({
     Reducer:Reducer
-
 })
-
-//localStorage.clear()
-
 
 const store = createStore(reducers,
     (localStorage['weather'])
@@ -17,16 +13,12 @@ const store = createStore(reducers,
         :{}
         ,applyMiddleware(thunkMiddleware))
 
-
-
 store.subscribe(() => {
 if(localStorage['weather'])
     localStorage['weather'] = JSON.stringify(store.getState())
 else
     localStorage['weather'] = JSON.stringify(initState)
-
 });
-
 
 window.store = store;
 export default store

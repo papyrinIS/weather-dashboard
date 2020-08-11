@@ -1,10 +1,11 @@
 .App {
   text-align: center;
   margin: auto;
-&__isEmpty{
-  font-size: 25px;
-  margin: 10px;
-}
+
+  &__isEmpty {
+    font-size: 25px;
+    margin: 10px;
+  }
 
   &__form {
     display: flex;
@@ -23,16 +24,19 @@
       margin-left: 10px;
       font-size: 19px;
       padding: 5px 10px;
-      &:hover{
+
+      &:hover {
         cursor: pointer;
       }
     }
   }
-&__error{
-  height: 40px;
-  color: red;
-  font-size: 25px;
-}
+
+  &__error {
+    height: 40px;
+    color: red;
+    font-size: 25px;
+  }
+
   .dashboards {
     display: flex;
     justify-content: center;
@@ -52,28 +56,31 @@
 
         font-size: 19px;
         padding: 5px 10px;
-        color:red;
+        color: red;
         border-radius: 10px;
         border: 2px solid red;
         background: transparent;
         font-weight: bold;
-      &:hover{
-        cursor: pointer;
-      }
+
+        &:hover {
+          cursor: pointer;
+        }
       }
 
       &__button {
         position: relative;
-        bottom:25px;
+        bottom: 25px;
         left: 60px;
         width: 100px;
         height: 40px;
       }
-&__city{
-  font-size: 35px;
-  margin: 5px;
-}
-      &__temp{
+
+      &__city {
+        font-size: 35px;
+        margin: 5px;
+      }
+
+      &__temp {
         font-size: 30px;
 
       }
