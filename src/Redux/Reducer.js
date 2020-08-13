@@ -2,7 +2,7 @@ import {getWeatherAPI} from "../API/API";
 
 const GET_WEATHER = 'GET_WEATHER'
 const CITY = 'CITY'
-const DELETE_DASHBOARD = 'DELETE_DASHBOARD'
+export const DELETE_DASHBOARD = 'DELETE_DASHBOARD'
 const ERROR = 'ERROR'
 
 

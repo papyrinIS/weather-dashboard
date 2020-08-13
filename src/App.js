@@ -1,35 +1,95 @@
-import React, {useEffect, useState} from 'react';
-import './Styles/WeatherDashboard.scss'
-import {connect} from "react-redux";
+import React, {useCallback, useEffect, useState} from 'react';
+import {useDispatch, useSelector} from "react-redux";
 import {errorAC, getCityAC, getWeatherThunk} from "./Redux/Reducer";
-import WeatherDashboard from "./Components/WeatherDashboard";
-import {CSSTransition, TransitionGroup} from "react-transition-group";
+import {WeatherDashboard} from "./Components/WeatherDashboard";
+import styled from "styled-components"
 
-const App = ({dashboards, getWeatherThunk, getCityAC, city, error, errorAC}) => {
+
+const BodyApp = styled.div`
+text-align: center;
+margin: auto;`;
+
+const AppForm = styled.div`
+ display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    
+     & input {
+      height: 30px;
+      font-size: 25px;
+      padding-left: 5px;
+      width: 250px;
+    }
+    
+    & button {
+      margin-left: 10px;
+      font-size: 19px;
+      padding: 5px 10px;
+
+      &:hover {
+        cursor: pointer;
+      }`;
+
+const AppError = styled.div`
+    height: 40px;
+    color: red;
+    font-size: 25px;
+`
+const IsEmpty = styled.div`
+    font-size: 25px;
+    margin: 10px;
+`
+const Dashboards = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+`
+
+
+export const App = () => {
+
+    const dispatch = useDispatch()
+    const {dashboards, city, error} = useSelector(state => {
+        return {
+            dashboards: state.Reducer.dashboards,
+            city: state.Reducer.city,
+            error: state.Reducer.error
+        }
+    })
+
     useEffect(() => {
         if (city)
-            getWeatherThunk(city)
-    }, [getWeatherThunk, city])
+            dispatch(getWeatherThunk(city))
+    }, [dispatch, city])
 
 
     let [valueInput, setValueInput] = useState('')
-    const addCity = () => getCityAC(valueInput)
-    const clearInput = () => setValueInput('')
+
+    const addCity = useCallback(() => {
+        dispatch(getCityAC(valueInput))
+    }, [dispatch, valueInput])
+
+
+    const clearInput = useCallback(
+        () => {
+            setValueInput('')
+        }, [setValueInput])
 
     let dashboard = dashboards.map(m =>
-        <CSSTransition classNames="option" key={m.name} timeout={1000}>
-            <WeatherDashboard
-                icon={m.weather[0].icon}
-                city={m.name}
-                mainWeather={m.main}/>
-        </CSSTransition>)
+        <WeatherDashboard
+            key={m.name}
+            icon={m.weather[0].icon}
+            city={m.name}
+            mainWeather={m.main}/>
+    )
 
     if (error) {
-        setTimeout(() => errorAC(false), 3000)
+        setTimeout(() => dispatch(errorAC(false)), 3000)
     }
     return (
-        <div className="App">
-            <div className="App__form">
+        <BodyApp>
+            <AppForm>
                 <input value={valueInput}
                        onChange={(e) => {
                            setValueInput(e.currentTarget.value.replace(/^[а-яА-Я]+$/, ''))
@@ -39,29 +99,20 @@ const App = ({dashboards, getWeatherThunk, getCityAC, city, error, errorAC}) => 
                 <button onClick={addCity}>add</button>
 
                 <button onClick={clearInput}>Clear</button>
-            </div>
-            <div className="App__error">{error && <span>city not found</span>}</div>
+            </AppForm>
+            <AppError>{error && <span>city not found</span>}</AppError>
             {dashboards.length === 0 && (
-                <div className="App__isEmpty">Dashboard is empty</div>
+                <IsEmpty>Dashboard is empty</IsEmpty>
             )}
-            <div>
-                <TransitionGroup className="dashboards">
-                    {dashboard}
-                </TransitionGroup>
-            </div>
 
-        </div>
+            <Dashboards>
+                {dashboard}
+            </Dashboards>
+
+        </BodyApp>
     );
 }
 
-const mapStateToProps = (state) => {
-    return {
-        dashboards: state.Reducer.dashboards,
-        city: state.Reducer.city,
-        error: state.Reducer.error
-    }
-}
 
-export default connect(mapStateToProps, {getWeatherThunk, getCityAC, errorAC})(App)
 
 

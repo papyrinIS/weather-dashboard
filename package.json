@@ -2,7 +2,7 @@
   "name": "weather-dashboard",
   "version": "0.1.0",
   "private": true,
-  "homepage": "http://papyrinIS.github.io/weather-dashboard",
+  "homepage": "https://papyrinIS.github.io/weather-dashboard",
   "dependencies": {
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
@@ -17,7 +17,8 @@
     "react-transition-group": "^4.4.1",
     "redux": "^4.0.5",
     "redux-thunk": "^2.3.0",
-    "sass": "^1.26.10"
+    "sass": "^1.26.10",
+    "styled-components": "^5.1.1"
   },
   "scripts": {
     "start": "react-scripts start",
