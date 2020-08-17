@@ -1,1 +1,22 @@
+.animate-enter {
+    transform: translate(0, -200px);
+    opacity: 0;
+}
+
+.animate-enter-active {
+    opacity: 1;
+    transition: 0.5s ease;
+    transform: translate(0, 0);
+}
+
+.animate-exit {
+    transform: translate(0, 0);
+    opacity: 1;
+}
+
+.animate-exit-active {
+    transform: translate(0, -200px);
+    opacity: 0;
+    transition: 0.5s ease;
+}
 
